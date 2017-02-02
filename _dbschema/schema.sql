@@ -165,8 +165,7 @@ AS SELECT
       t.tags AS `tags`,
      IFNULL(t.display_name, t.name) AS `name`,
       t.memo AS `memo`,
-      t.account_id AS `account_id`
+      t.account_id AS `account_id`,
+      IF(t.hidden = 'yes' OR t.category IN (SELECT `name` from categories where hidden = 'yes'), 'yes', 'no') AS hidden
  FROM transactions t
-WHERE t.hidden = 'no'
-  AND t.category NOT IN (SELECT `name` from categories where hidden = 'yes')
 ;

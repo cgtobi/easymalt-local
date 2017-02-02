@@ -13,9 +13,9 @@
     <key>StartCalendarInterval</key>
     <dict>
         <key>Hour</key>
-        <integer>15</integer>
+        <integer>10</integer>
         <key>Minute</key>
-        <integer>46</integer>
+        <integer>0</integer>
     </dict>
     <key>AbandonProcessGroup</key>
     <true/>
