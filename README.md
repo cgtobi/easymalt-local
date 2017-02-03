@@ -15,34 +15,38 @@ Installation
 
 1. If some of your institutions provides access to your data using an OFX URL (search for your institutions on [ofxhome.com](http://ofxhome.com/) to know), install [ofxclient](http://captin411.github.io/ofxclient/) in a virtualenv:
 
-    
+    ```
     $ virtualenv venv
     $ source venv/bin/activate
     (venv) $ easy_install ofxclient
     (venv) $ sed -i'' -e 's/ofxdata.read()/ofxdata.read().encode()/' venv/lib/python*/site-packages/ofxclient-*-py*.egg/ofxclient/cli.py
+    ```
 
 2. To configure `ofxclient` for your institutions, run:
 
-
+    ```
     $ source venv/bin/activate
     (venv) $ venv/bin/ofxclient --config .local_config/ofxclient-tangerine.ini
+    ```
 
 Replacing `.local_config/ofxclient-tangerine.ini` with a different filename for each of your institutions.
 
 3. Install [composer](https://getcomposer.org/), and run it from the project directory:
 
-
+    ```
     $ cd /path/to/finances-local/
     $ composer install
+    ```
 
 4. Copy `config.example.php` to `config.php`, and change the configuration options in that file.
 
 5. Create the (remote or local) database to save the data into.
 
-
+    ```
     mysql > CREATE DATABASE 'finances_local' CHARACTER SET = 'utf8mb4';
     mysql > GRANT SELECT, UPDATE, INSERT ON 'finances'.* to 'loc_fin_user'@'localhost' identified by 'some_password_here';
     mysql > source path/to/_dbschema/schema.sql
+    ```
     
 Change the `tags` column in `transactions` and `post_processing` tables to the tags you'd like to use.  
 Add or change the example post-processing rules from the `post_processing` table as needed.  
@@ -50,16 +54,18 @@ Change the available categories in the `categories` tables.
 
 6. If you want to receive reports by email, make sure your computer can send emails from the command line. Test it with:
 
-
-    echo "test" | mail -s Test1 you@gmail.com
-
+    ```
+    $ echo "test" | mail -s Test1 you@gmail.com
+    ```
+    
 7. Install the launchd configuration:
 
-
+    ```
     $ sudo ln -s /path/to/finances-local/bin/download-n-import.sh /usr/local/bin/
     $ cd ~/Library/LaunchAgents/
     $ ln -s /path/to/finances-local/launchd/com.pommepause.finances.local.plist
     $ launchctl load -w com.pommepause.finances.local.plist
-
+    ```
+    
 Every day at 10am, launchd will execute `/usr/local/bin/download-n-import.sh`, which will download then import your data into your configured database.  
 If configured, you will receive an email report when this process completes.
