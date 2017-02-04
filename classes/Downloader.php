@@ -35,16 +35,6 @@ class Downloader
         }
     }
 
-    public static function downloadBNC($username, $password, $security_questions) {
-        // Arguments: username, password, question1, answer1[, question2, answer2[, ...]]
-        $args = [$username, $password];
-        foreach ($security_questions as $q => $a) {
-            $args[] = $q;
-            $args[] = $a;
-        }
-        static::_download("Banque Nationale du Canada", 'bnc-ca', 'download/bnc-ca.sh', $args, OPT_ESCAPE_ARGS|OPT_URL_ENCODE);
-    }
-
     public static function downloadPCFinance($username, $password, $answer, $language) {
         $args = [
             $username,

@@ -7,26 +7,26 @@ Will also post-process those transactions in order to renamed, categorize and/or
 Requirements
 ------------
 
-The following installation instructions will only work on Mac. The latest macOS version (Sierra) already has the necessary Python 3.5 & virtualenv requirements installed.  
-You will also need a recent PHP version installed: `brew install php71`
+- Python 3.x and [virtualenv](https://virtualenv.pypa.io) installed.  
+The latest macOS version (Sierra) already has the necessary Python 3.5 & virtualenv requirements installed.  
+- You will also need a recent PHP version installed: `brew install php71`
 
 Installation
 ------------
 
-1. If some of your institutions provides access to your data using an OFX URL (search for your institutions on [ofxhome.com](http://ofxhome.com/) to know), install [ofxclient](http://captin411.github.io/ofxclient/) in a virtualenv:
-
+1. Install the python requirements (in a virtual environment):
     ```
-    $ virtualenv venv
+    $ virtualenv --python=python3 venv
     $ source venv/bin/activate
     (venv) $ easy_install ofxclient
     (venv) $ sed -i'' -e 's/ofxdata.read()/ofxdata.read().encode()/' venv/lib/python*/site-packages/ofxclient-*-py*.egg/ofxclient/cli.py
+    (venv) $ pip install requests
+    (venv) $ pip install keyring
     ```
 
-2. To configure `ofxclient` for your institutions, run:
-
+2. If some of your institutions provides access to your data using an OFX URL (search for your institutions on [ofxhome.com](http://ofxhome.com/) to know), configure `ofxclient` for your institutions, run:
     ```
-    $ source venv/bin/activate
-    (venv) $ venv/bin/ofxclient --config .local_config/ofxclient-tangerine.ini
+    $ venv/bin/ofxclient --config .local_config/ofxclient-tangerine.ini
     ```
 
 Replacing `.local_config/ofxclient-tangerine.ini` with a different filename for each of your institutions.

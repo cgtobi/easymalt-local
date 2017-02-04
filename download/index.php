@@ -19,8 +19,4 @@ Downloader::downloadChaseCanada(
     'en'
 );
 
-Downloader::downloadBNC(
-    Config::getSecure('bnc_ca_username'),
-    Config::getSecure('bnc_ca_password'),
-    json_decode(Config::getSecure('bnc_ca_sec_questions'), TRUE)
-);
+exec('venv/bin/python cron.py');
