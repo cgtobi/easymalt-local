@@ -1,14 +1,39 @@
-import requests
+import collections
 import time
 import re
 
+from maltease.downloaders.downloader import Downloader
 
-class Downloader(object):
 
-    session = None
-    last_url = None
+class BncCa(Downloader):
 
-    def get_from_bnc_ca(self, username, password, security_questions_answers):
+    def get_institution_name(self):
+        return "Banque Nationale du Canada"
+
+    def get_institution_code(self):
+        return "bnc-ca"
+
+    def get_required_credentials(self):
+        c = collections.OrderedDict()
+        c["username"] = "Username"
+        c["password"] = "Password"
+        c["question1"] = "Security question #1 (one word that is only in this question)"
+        c["answer1"] = "Answer to security question #1"
+        c["question2"] = "Security question #2 (one word that is only in this question)"
+        c["answer2"] = "Answer to security question #2"
+        c["question3"] = "Security question #3 (one word that is only in this question)"
+        c["answer3"] = "Answer to security question #3"
+        return c
+
+    def download_files(self):
+        username = self.keyring_get("username")
+        password = self.keyring_get("password")
+        security_questions_answers = {
+            self.keyring_get("question1"): self.keyring_get("answer1"),
+            self.keyring_get("question2"): self.keyring_get("answer2"),
+            self.keyring_get("question3"): self.keyring_get("answer3")
+        }
+
         self.start_session(first_referer='https://bvi.bnc.ca/index/bnc/index.html')
 
         # GET Login page
@@ -100,26 +125,3 @@ class Downloader(object):
             # Back to Historique
             url = "https://bvi.bnc.ca%s" % main_url
             self.get(url)
-
-    def start_session(self, first_referer=None):
-        self.session = requests.Session()
-        # Default headers
-        self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.67 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'fr-CA,en-CA;q=0.8,fr;q=0.6,en-US;q=0.4,en;q=0.2'
-        })
-        if first_referer:
-            self.session.headers.update({'Referer': first_referer})
-
-    def get(self, url, **kwargs):
-        r = self.session.get(url, **kwargs)
-        # For next request
-        self.session.headers.update({'Referer': url})
-        return r
-
-    def post(self, url, data=None, json=None, **kwargs):
-        r = self.session.post(url, data, json, **kwargs)
-        # For next request
-        self.session.headers.update({'Referer': url})
-        return r

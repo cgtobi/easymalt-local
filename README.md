@@ -22,6 +22,7 @@ Installation
     (venv) $ sed -i'' -e 's/ofxdata.read()/ofxdata.read().encode()/' venv/lib/python*/site-packages/ofxclient-*-py*.egg/ofxclient/cli.py
     (venv) $ pip install requests
     (venv) $ pip install keyring
+    (venv) $ echo "`pwd`" > $(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")/maltease.pth
     ```
 
 2. If some of your institutions provides access to your data using an OFX URL (search for your institutions on [ofxhome.com](http://ofxhome.com/) to know), configure `ofxclient` for your institutions, run:

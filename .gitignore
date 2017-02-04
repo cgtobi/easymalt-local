@@ -4,3 +4,5 @@ config.php
 .local_config
 data
 !data/.data-dir
+maltease\.ini
+*.pyc
