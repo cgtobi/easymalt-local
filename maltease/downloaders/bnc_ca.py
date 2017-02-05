@@ -1,4 +1,5 @@
 import collections
+import os
 import time
 import re
 
@@ -11,11 +12,11 @@ class BncCa(Downloader):
         return "Banque Nationale du Canada"
 
     def get_institution_code(self):
-        return "bnc-ca"
+        return os.path.basename(__file__[:-3])
 
     def get_required_credentials(self):
         c = collections.OrderedDict()
-        c["username"] = "Username"
+        c["username"] = "Username (last 12 digits of client card no.)"
         c["password"] = "Password"
         c["question1"] = "Security question #1 (one word that is only in this question)"
         c["answer1"] = "Answer to security question #1"
@@ -37,7 +38,9 @@ class BncCa(Downloader):
         self.start_session(first_referer='https://bvi.bnc.ca/index/bnc/index.html')
 
         # GET Login page
-        url = 'https://bvi.bnc.ca/auth/Login?GAREASONCODE=-1&GARESOURCEID=SbipBncC&GAURI=https://bvi.bnc.ca/bnc/page%3FaliasDispatcher%3Dstartup&Reason=-1&APPID=SbipBncC&URI=https://bvi.bnc.ca/bnc/page%3FaliasDispatcher%3Dstartup'
+        url = 'https://bvi.bnc.ca/auth/Login?GAREASONCODE=-1&GARESOURCEID=SbipBncC&GAURI=https://bvi.bnc.ca/bnc/page' \
+              '%3FaliasDispatcher%3Dstartup&Reason=-1&APPID=SbipBncC&URI=https://bvi.bnc.ca/bnc/page' \
+              '%3FaliasDispatcher%3Dstartup '
         self.get(url)
 
         # Login POST
@@ -86,7 +89,7 @@ class BncCa(Downloader):
         for account_url in accounts:
             match = re.search(r"key=(.*?)&", account_url)
             account_number = match.group(1)
-            print("[A] %s" % account_number)
+            print("    [A] %s" % account_number)
 
             url = "https://bvi.bnc.ca%s" % account_url
             r = self.get(url)
@@ -119,7 +122,7 @@ class BncCa(Downloader):
                     'txtExtension': 'DN',
                     'optExportType': '3'
                 })
-                with open("data/bnc-ca-%s.ofx" % account_number, "w") as ofx_file:
+                with open("data/%s_%s.ofx" % (self.get_institution_code(), account_number), "w") as ofx_file:
                     print(r.text, file=ofx_file)
 
             # Back to Historique

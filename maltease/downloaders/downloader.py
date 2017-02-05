@@ -1,8 +1,9 @@
+import inspect
 import keyring
 import os
 import re
 import requests
-import sys, inspect
+import sys
 
 
 class Downloader(object):

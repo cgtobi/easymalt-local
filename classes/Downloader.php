@@ -35,26 +35,6 @@ class Downloader
         }
     }
 
-    public static function downloadPCFinance($username, $password, $answer, $language) {
-        $args = [
-            $username,
-            $password,
-            $answer,
-            $language
-        ];
-        static::_download("PC Finance Mastercard", 'pc-fin', 'download/cc-generic.sh pc-fin', $args, OPT_ESCAPE_ARGS|OPT_URL_ENCODE);
-    }
-
-    public static function downloadChaseCanada($username, $password, $answer, $language) {
-        $args = [
-            $username,
-            $password,
-            $answer,
-            $language
-        ];
-        static::_download("Chase Canada VISA", 'chase-can', 'download/cc-generic.sh chase-can', $args, OPT_ESCAPE_ARGS|OPT_URL_ENCODE);
-    }
-
     private static function _download($bank_name, $bank_code, $command, $args, $options = 0) {
         static::_log(LOG_LEVEL_INFO, "[D] Downloading '$bank_name' transactions ...");
         foreach (glob("data/$bank_code-*") as $file) {
