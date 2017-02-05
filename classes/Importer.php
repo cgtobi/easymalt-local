@@ -7,7 +7,7 @@ class Importer
     public static function importTangerine() {
         $ofxParser = new \OfxParser\Parser();
         $data_files_dir = 'data';
-        $data_files_prefix = 'tangerine-';
+        $data_files_prefix = 'tangerine_';
         $files_glob = $data_files_dir . DIRECTORY_SEPARATOR . $data_files_prefix . '*.ofx';
         foreach (glob($files_glob) as $file) {
             $ofx = $ofxParser->loadFromFile($file);
@@ -43,7 +43,7 @@ class Importer
     public static function importBNC() {
         $ofxParser = new \OfxParser\Parser();
         $data_files_dir = 'data';
-        $data_files_prefix = 'bnc-ca-';
+        $data_files_prefix = 'bnc_ca_';
         $files_glob = $data_files_dir . DIRECTORY_SEPARATOR . $data_files_prefix . '*.ofx';
         foreach (glob($files_glob) as $file) {
             $ofx = $ofxParser->loadFromFile($file);
@@ -77,11 +77,11 @@ class Importer
     }
 
     public static function importPCFinance() {
-        static::_importGenericCC('pc-fin', '5228790001480970');
+        static::_importGenericCC('pcmastercard_ca', '5228790001480970');
     }
 
     public static function importChaseCanada() {
-        static::_importGenericCC('chase-can', '4685631474986490');
+        static::_importGenericCC('chasecanaca_ca', '4685631474986490');
     }
 
     public static function postProcess() {
@@ -130,7 +130,7 @@ class Importer
 
     private static function _importGenericCC($bank_code, $account_number) {
         $data_files_dir = 'data';
-        $data_files_prefix = "$bank_code-";
+        $data_files_prefix = $bank_code . "_";
 
         $q = "SELECT * FROM accounts WHERE account_number = :number";
         $account = DB::getFirst($q, $account_number);

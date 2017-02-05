@@ -18,6 +18,3 @@ $CONFIG->DB_TIMEZONE = 'America/Montreal'; // PHP format; ref: http://php.net/ma
 // LOG_LEVEL_DEBUG & LOG_LEVEL_INFO: you will receive emails every day, when the daily 'download-n-import' runs
 // LOG_LEVEL_WARNING & +: you will only receive emails when something goes wrong
 $CONFIG->LOG_LEVEL = LOG_LEVEL_INFO;
-
-// If you installed ofxclient somewhere else than the venv virtualenv, specify the full path to the ofxclient executable here.
-$CONFIG->OFXCLIENT_EXECUTABLE = 'venv/bin/ofxclient';

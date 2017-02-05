@@ -1,6 +1,8 @@
+import configparser
 import inspect
 import keyring
 import os
+from pkg_resources import load_entry_point
 import re
 import requests
 import sys
@@ -31,7 +33,7 @@ class Downloader(object):
     def get_downloader(code):
         module = sys.modules['maltease.downloaders']
         for name, obj in inspect.getmembers(module):
-            if inspect.isclass(obj) and name != 'Downloader':
+            if inspect.isclass(obj) and hasattr(obj(), 'get_institution_code') and name != 'Downloader' and name != 'OFXDownloader':
                 d = obj()
                 if d.get_institution_code() == code:
                     return d
@@ -77,7 +79,8 @@ class Downloader(object):
         self.session = requests.Session()
         # Default headers
         self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.67 Safari/537.36',
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) '
+                          'Chrome/56.0.2924.67 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Accept-Language': 'fr-CA,en-CA;q=0.8,fr;q=0.6,en-US;q=0.4,en;q=0.2'
         })
@@ -95,3 +98,26 @@ class Downloader(object):
         # For next request
         self.session.headers.update({'Referer': url})
         return r
+
+
+class OFXDownloader(Downloader):
+
+    def get_required_credentials(self):
+        # Not needed
+        pass
+
+    def is_configured(self):
+        return os.path.exists(self._get_config_file()) and os.path.getsize(self._get_config_file()) > 10
+
+    def configure(self):
+        print("Configuring '%s'" % self.get_institution_name())
+        sys.argv = ['ofxclient', '--config', self._get_config_file()]
+        load_entry_point('ofxclient==2.0.2', 'console_scripts', 'ofxclient')()
+
+    def _get_config_file(self):
+        return ".local_config/%s_ofxclient.ini" % self.get_institution_code()
+
+    def _get_config(self):
+        config = configparser.ConfigParser()
+        config.read(self._get_config_file())
+        return config
