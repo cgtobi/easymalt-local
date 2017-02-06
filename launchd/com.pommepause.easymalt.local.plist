@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.pommepause.finances.local</string>
+    <string>com.pommepause.easymalt.local</string>
     <key>KeepAlive</key>
     <false/>
     <key>RunAtLoad</key>

@@ -9,8 +9,8 @@ import os
 import re
 import sys
 
-from maltease.importers.models.account import *
-from maltease.importers.models.transaction import *
+from easymalt.importers.models.account import *
+from easymalt.importers.models.transaction import *
 
 class Importer(object):
 
@@ -25,13 +25,13 @@ class Importer(object):
     # End of abstract methods
 
     def __init__(self):
-        DB.connect('maltease.sqlite')
+        DB.connect('easymalt.sqlite')
         DB.init_if_needed('accounts', '_dbschema/schema.sql')
 
 
     @staticmethod
     def get_importer(code):
-        module = sys.modules['maltease.importers']
+        module = sys.modules['easymalt.importers']
         for name, obj in inspect.getmembers(module):
             try:
                 if inspect.isclass(obj):
@@ -46,7 +46,7 @@ class Importer(object):
 
     def keyring_get(self, name):
         keyring_name = "%s_%s" % (self.get_institution_code(), name)
-        value = keyring.get_password("org.maltease.local", keyring_name)
+        value = keyring.get_password("org.easymalt.local", keyring_name)
         return value
 
 class TSVImporter(Importer):

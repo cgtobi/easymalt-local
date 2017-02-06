@@ -1,7 +1,7 @@
 from ofxclient.config import OfxConfig
 import os
 
-from maltease.downloaders.downloader import OFXDownloader
+from easymalt.downloaders.downloader import OFXDownloader
 
 
 class TangerineCa(OFXDownloader):

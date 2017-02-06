@@ -3,7 +3,7 @@ import os
 import time
 import re
 
-from maltease.downloaders.downloader import Downloader
+from easymalt.downloaders.downloader import Downloader
 
 
 class BncCa(Downloader):

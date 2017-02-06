@@ -1,5 +1,5 @@
 
-from maltease.DB import DB
+from easymalt.DB import DB
 
 
 class Account:

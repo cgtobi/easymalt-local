@@ -1,6 +1,6 @@
 import os
 
-from maltease.importers.importer import OFXImporter
+from easymalt.importers.importer import OFXImporter
 
 
 class BncCa(OFXImporter):

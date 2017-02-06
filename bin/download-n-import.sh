@@ -10,17 +10,17 @@ DIR="$( cd "$( dirname "${SOURCE}" )" && pwd )"
 cd "${DIR}/.."
 # PWD (current directory) = project root folder
 
-rm -f /tmp/finances-local.log
+rm -f /tmp/easymalt-local.log
 
 source venv/bin/activate
-python maltease/cron.py > /tmp/finances-local.log
+python easymalt/cron.py > /tmp/easymalt-local.log
 
 # Send email report?
-$(python maltease/config_export.py)
+$(python easymalt/config_export.py)
 if [ ! -z "${MAILTO}" ]; then
-	if [ -s /tmp/finances-local.log ]; then
-		cat /tmp/finances-local.log | mail -s "Local Finances Import" ${MAILTO}
+	if [ -s /tmp/easymalt-local.log ]; then
+		cat /tmp/easymalt-local.log | mail -s "Local Finances Import" ${MAILTO}
 	fi
 fi
 
-# Don't delete /tmp/finances-local.log yet; user might want to refer to it, or get its content to send it somewhere else.
+# Don't delete /tmp/easymalt-local.log yet; user might want to refer to it, or get its content to send it somewhere else.

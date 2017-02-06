@@ -31,7 +31,7 @@ class Downloader(object):
 
     @staticmethod
     def get_downloader(code):
-        module = sys.modules['maltease.downloaders']
+        module = sys.modules['easymalt.downloaders']
         for name, obj in inspect.getmembers(module):
             try:
                 if inspect.isclass(obj):
@@ -51,12 +51,12 @@ class Downloader(object):
 
     def keyring_get(self, name):
         keyring_name = "%s_%s" % (self.get_institution_code(), name)
-        value = keyring.get_password("org.maltease.local", keyring_name)
+        value = keyring.get_password("org.easymalt.local", keyring_name)
         return value
 
     def keyring_put(self, name, value):
         keyring_name = "%s_%s" % (self.get_institution_code(), name)
-        keyring.set_password("org.maltease.local", keyring_name, value)
+        keyring.set_password("org.easymalt.local", keyring_name, value)
 
     def is_configured(self):
         for k, prompt in self.get_required_credentials().items():

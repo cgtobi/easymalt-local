@@ -1,12 +1,12 @@
 import configparser
 
-from maltease.downloaders.downloader import Downloader
-from maltease.importers.importer import Importer
-from maltease.remote import RemoteAPI
+from easymalt.downloaders.downloader import Downloader
+from easymalt.importers.importer import Importer
+from easymalt.remote import RemoteAPI
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
-    config.read('maltease.ini')
+    config.read('easymalt.ini')
 
     # Download
     for account, enabled in config['accounts'].items():

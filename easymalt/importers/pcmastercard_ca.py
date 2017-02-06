@@ -1,6 +1,6 @@
 import os
 
-from maltease.importers.chasecanada_ca import ChaseCanadaCa
+from easymalt.importers.chasecanada_ca import ChaseCanadaCa
 
 
 class PcMastercardCa(ChaseCanadaCa):

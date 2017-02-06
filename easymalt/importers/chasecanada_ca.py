@@ -1,7 +1,7 @@
 import os
 
-from maltease.importers.importer import TSVImporter
-from maltease.importers.models.transaction import *
+from easymalt.importers.importer import TSVImporter
+from easymalt.importers.models.transaction import *
 
 
 class ChaseCanadaCa(TSVImporter):

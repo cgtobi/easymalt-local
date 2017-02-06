@@ -2,7 +2,7 @@ import configparser
 import json
 import requests
 
-from maltease.DB import DB
+from easymalt.DB import DB
 
 
 class RemoteAPI:
@@ -10,13 +10,13 @@ class RemoteAPI:
     @staticmethod
     def send():
         config = configparser.ConfigParser()
-        config.read('maltease.ini')
+        config.read('easymalt.ini')
 
         if 'remote' not in config.sections() or 'api_url' not in config['remote']:
             # Not configured
             return
 
-        DB.connect('maltease.sqlite')
+        DB.connect('easymalt.sqlite')
 
         q = "SELECT * FROM accounts"
         accounts = DB.get_all(q)
