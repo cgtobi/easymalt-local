@@ -33,4 +33,5 @@ class RemoteAPI:
         headers = {'Content-type': 'application/json'}
         if 'api_auth_token' in config['remote']:
             headers['Authorization'] = 'Bearer %s' % config['remote']['api_auth_token']
-        requests.post(api_url, data=json.dumps(payload), headers=headers)
+        r = requests.post(api_url, data=json.dumps(payload), headers=headers)
+        print(r.text)
