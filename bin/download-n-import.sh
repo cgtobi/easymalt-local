@@ -10,11 +10,12 @@ DIR="$( cd "$( dirname "${SOURCE}" )" && pwd )"
 cd "${DIR}/.."
 # PWD (current directory) = project root folder
 
+rm -f /tmp/finances-local.log
+
 source venv/bin/activate
-python maltease/cron.py
+python maltease/cron.py >> /tmp/finances-local.log
 
 source init.inc.sh
-
 /usr/local/bin/php import/index.php >> /tmp/finances-local.log
 
 if [ ! -z "${MAILTO}" ]; then

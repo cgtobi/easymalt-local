@@ -6,3 +6,4 @@ data
 !data/.data-dir
 maltease\.ini
 *.pyc
+maltease\.sqlite

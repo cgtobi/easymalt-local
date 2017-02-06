@@ -20,6 +20,9 @@ class ChaseCanadaCa(Downloader):
         c["username"] = "Username"
         c["password"] = "Password"
         c["sec_answer"] = "Answer to security question"
+        c["currency"] = "Currency (CAD, USD, ...)"
+        c["account_number"] = "Account number"
+        c["language"] = "Language code ('fr' or 'en')"
         return c
 
     def download_files(self):

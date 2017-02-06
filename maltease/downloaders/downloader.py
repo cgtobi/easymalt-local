@@ -33,6 +33,16 @@ class Downloader(object):
     def get_downloader(code):
         module = sys.modules['maltease.downloaders']
         for name, obj in inspect.getmembers(module):
+            try:
+                if inspect.isclass(obj):
+                    d = obj()
+                    if hasattr(d, 'get_institution_code') and d.get_institution_code() == code:
+                        return d
+            except NotImplementedError:
+                pass
+            except TypeError:
+                pass
+
             if inspect.isclass(obj) and hasattr(obj(), 'get_institution_code') and name != 'Downloader' and name != 'OFXDownloader':
                 d = obj()
                 if d.get_institution_code() == code:

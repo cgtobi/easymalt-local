@@ -20,6 +20,7 @@ Installation
     $ source venv/bin/activate
     (venv) $ easy_install ofxclient
     (venv) $ sed -i'' -e 's/ofxdata.read()/ofxdata.read().encode()/' venv/lib/python*/site-packages/ofxclient-*-py*.egg/ofxclient/cli.py
+    (venv) $ pip install ofxparse
     (venv) $ pip install requests
     (venv) $ pip install keyring
     (venv) $ echo "`pwd`" > $(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")/maltease.pth
