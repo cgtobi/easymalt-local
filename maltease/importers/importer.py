@@ -26,6 +26,8 @@ class Importer(object):
 
     def __init__(self):
         DB.connect('maltease.sqlite')
+        DB.init_if_needed('accounts', '_dbschema/schema.sql')
+
 
     @staticmethod
     def get_importer(code):

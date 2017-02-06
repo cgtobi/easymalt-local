@@ -12,17 +12,32 @@ class DB:
         DB.conn.row_factory = sqlite3.Row
 
     @staticmethod
+    def init_if_needed(table_name, sql_file):
+        q = "SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?"
+        db_inited = DB.get_first_value(q, table_name)
+        if not db_inited:
+            fd = open(sql_file, 'r')
+            sqlFile = fd.read()
+            fd.close()
+            sqlCommands = sqlFile.split(';')
+            for command in sqlCommands:
+                DB.execute(command)
+
+    @staticmethod
     def insert(q, args=None):
         cursor = DB.execute(q, args)
         return cursor.lastrowid
 
     @staticmethod
     def execute(q, args=None):
-        if args.__class__.__name__ != 'tuple':
-            # args needs to be a tuple
-            args = (args,)
         cursor = DB.conn.cursor()
-        cursor.execute(q, args)
+        if args is not None:
+            if args.__class__.__name__ != 'tuple':
+                # args needs to be a tuple
+                args = (args,)
+            cursor.execute(q, args)
+        else:
+            cursor.execute(q)
         return cursor
 
     @staticmethod
