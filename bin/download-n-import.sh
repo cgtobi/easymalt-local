@@ -13,11 +13,10 @@ cd "${DIR}/.."
 rm -f /tmp/finances-local.log
 
 source venv/bin/activate
-python maltease/cron.py >> /tmp/finances-local.log
+python maltease/cron.py > /tmp/finances-local.log
 
-source init.inc.sh
-/usr/local/bin/php import/index.php >> /tmp/finances-local.log
-
+# Send email report?
+$(python maltease/config_export.py)
 if [ ! -z "${MAILTO}" ]; then
 	if [ -s /tmp/finances-local.log ]; then
 		cat /tmp/finances-local.log | mail -s "Local Finances Import" ${MAILTO}

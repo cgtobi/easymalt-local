@@ -1,9 +1,7 @@
-vendor
-venv
-config.php
-.local_config
-data
-!data/.data-dir
-maltease\.ini
 *.pyc
+venv
+\.local_config
+data
+!data/\.data-dir
+maltease\.ini
 maltease\.sqlite

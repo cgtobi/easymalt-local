@@ -2,6 +2,7 @@ import configparser
 
 from maltease.downloaders.downloader import Downloader
 from maltease.importers.importer import Importer
+from maltease.remote import RemoteAPI
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
@@ -24,3 +25,6 @@ if __name__ == '__main__':
                 print("Error: can't find importer for %s" % account)
                 continue
             i.import_files()
+
+    # Send to remote API (if configured in .ini)
+    RemoteAPI.send()

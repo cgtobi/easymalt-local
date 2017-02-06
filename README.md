@@ -1,15 +1,14 @@
 Local Finances Downloader & Importer
 ====================================
 
-Download transactions information from your financial institutions' websites, and import them in a MySQL database.  
-Will also post-process those transactions in order to renamed, categorize and/or tag them per your preference.
+Download transactions information from your financial institutions' websites, and import them in a local SQLite database.  
+If configured, will also send the accounts and transactions to a remote web services, for futther post-processing and to feed a web-app.
 
 Requirements
 ------------
 
 - Python 3.x and [virtualenv](https://virtualenv.pypa.io)  
 The latest macOS version (Sierra) already has the necessary Python 3.5 & virtualenv requirements installed.  
-- You will also need a recent PHP version installed: `brew install php71`
 
 Installation
 ------------
@@ -26,42 +25,21 @@ Installation
     (venv) $ echo "`pwd`" > $(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")/maltease.pth
     ```
 
-2. Install [composer](https://getcomposer.org/), and run it from the project directory:
+2. Copy `maltease.example.ini` to `maltease.ini` and edit as required.
 
-    ```
-    $ cd /path/to/finances-local/
-    $ composer install
-    ```
-
-3. Create the (remote or local) database to save the data into.
-
-    ```
-    mysql > CREATE DATABASE 'finances_local' CHARACTER SET = 'utf8mb4';
-    mysql > GRANT SELECT, UPDATE, INSERT ON 'finances'.* to 'loc_fin_user'@'localhost' identified by 'some_password_here';
-    mysql > source path/to/_dbschema/schema.sql
-    ```
-    
-Change the `tags` column in `transactions` and `post_processing` tables to the tags you'd like to use.  
-Add or change the example post-processing rules from the `post_processing` table as needed.  
-Change the available categories in the `categories` tables.
-
-4. Copy `config.example.php` to `config.php`, and change the configuration options in that file.
-
-5. Copy `maltease.example.ini` to `maltease.ini` and edit as required (to list all the institutions you want to connect to).
-
-6. Configure all the selected institutions by running the downloader manually once:
+3. Configure all the selected institutions by running the downloader manually once:
     ```
     $ source venv/bin/activate
     (venv) $ python maltease/cron.py
     ```
 
-7. If you want to receive reports by email, make sure your computer can send emails from the command line. Test it with:
+4. If you want to receive reports by email, make sure your computer can send emails from the command line. Test it with:
 
     ```
     $ echo "test" | mail -s Test1 you@gmail.com
     ```
     
-8. Install the launchd configuration:
+5. Install the launchd configuration:
 
     ```
     $ sudo ln -s /path/to/finances-local/bin/download-n-import.sh /usr/local/bin/
@@ -70,5 +48,5 @@ Change the available categories in the `categories` tables.
     $ launchctl load -w com.pommepause.finances.local.plist
     ```
     
-Every day at 10am, launchd will execute `/usr/local/bin/download-n-import.sh`, which will download then import your data into your configured database.  
+Every day at 10am, launchd will execute `/usr/local/bin/download-n-import.sh`, which will download then import your data, and optionally send all downloaded information to your remote web-app.  
 If configured, you will receive an email report when this process completes.
