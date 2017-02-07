@@ -99,12 +99,18 @@ class Downloader(object):
 
     def get(self, url, **kwargs):
         r = self.session.get(url, **kwargs)
+        if r.status_code == 301 or r.status_code == 302:
+            print("Warning: Received 301/302 status code that we couldn't follow. There is probably something wrong "
+                  "with the response headers. See https://github.com/gboudreau/easymalt-local/issues/1 for details.")
         # For next request
         self.session.headers.update({'Referer': url})
         return r
 
     def post(self, url, data=None, json=None, **kwargs):
         r = self.session.post(url, data, json, **kwargs)
+        if r.status_code == 301 or r.status_code == 302:
+            print("Warning: Received 301/302 status code that we couldn't follow. There is probably something wrong "
+                  "with the response headers. See https://github.com/gboudreau/easymalt-local/issues/1 for details.")
         # For next request
         self.session.headers.update({'Referer': url})
         return r
