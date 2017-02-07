@@ -6,7 +6,7 @@ See [CONTRIBUTING.md](https://github.com/gboudreau/easymalt-local/blob/master/CO
 
 **Tangerine (Canada)**  
 Code: tangerine_ca  
-Login URL: https://secure.tangerine.ca/web/InitialTangerine.html?command=displayLogin&device=web  
+Login URL: https://secure.tangerine.ca/web/InitialTangerine.html?command=displayLogin&device=web&locale=en_CA  
 Notes: Was ING Direct. [Re-branded to Tangerine in 2014.](https://en.wikipedia.org/wiki/Tangerine_Bank)
 
 ***
