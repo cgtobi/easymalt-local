@@ -10,7 +10,7 @@ Supported institutions
 See [this folder](https://github.com/gboudreau/easymalt-local/tree/master/easymalt/downloaders/) for a list of all the supported institutions.  
 There are not that many right now. :|
 
-See [CONTRIBUTING.md](https://github.com/gboudreau/easymalt-local/tree/master/) if you'd like to help add new institutions.
+See [CONTRIBUTING.md](https://github.com/gboudreau/easymalt-local/blob/master/CONTRIBUTING.md) if you'd like to help add new institutions.
 
 
 Requirements
