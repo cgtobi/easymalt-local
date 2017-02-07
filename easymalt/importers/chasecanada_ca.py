@@ -40,12 +40,12 @@ class ChaseCanadaCa(TSVImporter):
         unique_id = line[7].strip('" ')
 
         if line[8] == 'C':
-            type = 'CREDIT'
+            txn_type = 'CREDIT'
         elif line[8] == 'D':
-            type = 'DEBIT'
+            txn_type = 'DEBIT'
         else:
             print("Error: unknown type found: %s" % line[8])
             return None
 
-        t = Transaction(None, unique_id, date, type, amount, payee, memo)
+        t = Transaction(None, unique_id, date, txn_type, amount, payee, memo)
         return t

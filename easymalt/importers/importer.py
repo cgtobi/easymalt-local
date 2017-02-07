@@ -12,6 +12,7 @@ import sys
 from easymalt.importers.models.account import *
 from easymalt.importers.models.transaction import *
 
+
 class Importer(object):
 
     # Abstract methods
@@ -27,7 +28,6 @@ class Importer(object):
     def __init__(self):
         DB.connect('easymalt.sqlite')
         DB.init_if_needed('accounts', '_dbschema/schema.sql')
-
 
     @staticmethod
     def get_importer(code):
@@ -49,9 +49,13 @@ class Importer(object):
         value = keyring.get_password("org.easymalt.local", keyring_name)
         return value
 
+
 class TSVImporter(Importer):
 
     # Abstract methods
+
+    def get_institution_code(self):
+        raise NotImplementedError("Class %s needs to implement get_institution_code() method" % __class__.__name__)
 
     def get_transaction_from_tsv(self, line, lang):
         # Create a Transaction object from a tab-separated line (already as a list object)
@@ -71,7 +75,8 @@ class TSVImporter(Importer):
 
     # End of abstract methods
 
-    def _parse_amount(self, amount_str):
+    @staticmethod
+    def _parse_amount(amount_str):
         match = re.match(r"^\$([\d,]+\.\d\d)$", amount_str)
         if match:
             return float(match.group(1).replace(',', ''))
@@ -87,7 +92,8 @@ class TSVImporter(Importer):
         print("Error: unparseable amount: %s" % amount_str)
         return None
 
-    def _parse_date(self, date_str, lang):
+    @staticmethod
+    def _parse_date(date_str, lang):
         match = re.match(r"^(\d+)/(\d+)/(\d+)$", date_str)
         if match:
             if lang == 'fr':
@@ -136,6 +142,13 @@ class TSVImporter(Importer):
 
 
 class OFXImporter(Importer):
+
+    # Abstract methods
+
+    def get_institution_code(self):
+        raise NotImplementedError("Class %s needs to implement get_institution_code() method" % __class__.__name__)
+
+    # End of abstract methods
 
     def import_files(self):
         for file in glob.glob("data/%s_*.ofx" % self.get_institution_code()):

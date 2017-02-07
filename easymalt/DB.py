@@ -17,10 +17,10 @@ class DB:
         db_inited = DB.get_first_value(q, table_name)
         if not db_inited:
             fd = open(sql_file, 'r')
-            sqlFile = fd.read()
+            sql_file = fd.read()
             fd.close()
-            sqlCommands = sqlFile.split(';')
-            for command in sqlCommands:
+            sql_commands = sql_file.split(';')
+            for command in sql_commands:
                 DB.execute(command)
 
     @staticmethod

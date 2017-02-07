@@ -4,12 +4,12 @@ from easymalt.DB import DB
 
 class Transaction:
 
-    def __init__(self, account, unique_id, date, type, amount, name, memo):
+    def __init__(self, account, unique_id, date, txn_type, amount, name, memo):
         self.id = None  # ROWID
         self.account = account
         self.unique_id = str(unique_id)
         self.date = date.isoformat(' ')
-        self.type = str(type).upper()
+        self.type = str(txn_type).upper()
         self.amount = float(amount)
         self.name = str(name)
         self.memo = str(memo)

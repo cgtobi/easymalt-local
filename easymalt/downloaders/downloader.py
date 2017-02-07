@@ -42,11 +42,6 @@ class Downloader(object):
                 pass
             except TypeError:
                 pass
-
-            if inspect.isclass(obj) and hasattr(obj(), 'get_institution_code') and name != 'Downloader' and name != 'OFXDownloader':
-                d = obj()
-                if d.get_institution_code() == code:
-                    return d
         return None
 
     def keyring_get(self, name):
@@ -117,6 +112,19 @@ class Downloader(object):
 
 
 class OFXDownloader(Downloader):
+
+    # Abstract methods
+
+    def get_institution_name(self):
+        raise NotImplementedError("Class %s needs to implement get_institution_name() method" % __class__.__name__)
+
+    def get_institution_code(self):
+        raise NotImplementedError("Class %s needs to implement get_institution_code() method" % __class__.__name__)
+
+    def download_files(self):
+        raise NotImplementedError("Class %s needs to implement download_files() method" % __class__.__name__)
+
+    # End of abstract methods
 
     def get_required_credentials(self):
         # Not needed
