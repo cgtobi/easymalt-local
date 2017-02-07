@@ -7,7 +7,7 @@ If configured, will also send the downloaded accounts and transactions to a remo
 
 Supported institutions
 ----------------------
-See [this folder](https://github.com/gboudreau/easymalt-local/tree/master/easymalt/downloaders/) for a list of all the supported institutions.  
+See [INSTITUTIONS.md](https://github.com/gboudreau/easymalt-local/tree/master/INSTITUTIONS.md) for a list of all the supported institutions.  
 There are not that many right now. :|
 
 See [CONTRIBUTING.md](https://github.com/gboudreau/easymalt-local/blob/master/CONTRIBUTING.md) if you'd like to help add new institutions.
